@@ -1,0 +1,11 @@
+default: 
+  backend: file
+  level: debug
+
+backend:
+  file: 
+    path: "./log"
+    name: "slf4go"
+    rotation_time: 1h
+    maxsize: 100
+
