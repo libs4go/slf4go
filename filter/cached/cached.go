@@ -80,7 +80,6 @@ func (cached *cachedBackend) Send(entry *slf4go.EventEntry) {
 	}()
 
 	cached.cached <- entry
-	println("cached entry")
 }
 
 func (cached *cachedBackend) Sync() {
