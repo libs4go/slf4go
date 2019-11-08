@@ -178,6 +178,7 @@ func (factory *loggerFactory) registerFilter(filter Filter) {
 	cached := make(map[string]Backend)
 
 	for name, backend := range factory.backend {
+		println(fmt.Sprintf("filter %s backend %s", filter.Name(), name))
 		cached[name] = filter.MakeChain(backend)
 	}
 
