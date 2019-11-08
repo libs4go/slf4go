@@ -11,4 +11,4 @@ backend:
   console: 
     formatter: 
       timestamp: Mon, 02 Jan 2006 15:04:05 -0700
-      output: "@l @t |@m|"
+      output: "@t @l @s @m (@func:@line)"

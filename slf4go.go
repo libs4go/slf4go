@@ -125,6 +125,10 @@ type EventEntry struct {
 	Level     Level                  `json:"@l"`
 	Message   string                 `json:"@m"`
 	Attrs     map[string]interface{} `json:"@a"`
+	Source    string                 `json:"@s"`
+	File      string                 `json:"@f"`
+	Line      int                    `json:"@line"`
+	Function  string                 `json:"@func"`
 }
 
 type loggerFactory struct {
@@ -340,11 +344,17 @@ func (facade *loggerFacade) createEventEntry(message string, level Level, args .
 		attrs[placeholder] = args[i]
 	}
 
+	callframe := getCallFrame()
+
 	entry := &EventEntry{
 		Timestamp: time.Now(),
 		Level:     level,
 		Message:   message,
 		Attrs:     attrs,
+		Source:    facade.name,
+		File:      callframe.File,
+		Line:      callframe.Line,
+		Function:  callframe.Function,
 	}
 
 	return entry
