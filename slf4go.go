@@ -331,13 +331,24 @@ func (facade *loggerFacade) createEventEntry(message string, level Level, args .
 
 	for i, placeholder := range placeholders {
 
-		data, err := json.Marshal(args[i])
+		var data string
 
-		if err != nil {
-			panic(errors.Wrap(err, "marshal arg %d error", i))
+		if val, ok := args[i].(error); ok {
+			data = val.Error()
+		} else if val, ok := args[i].(fmt.Stringer); ok {
+			data = val.String()
+		} else {
+
+			buff, err := json.Marshal(args[i])
+
+			if err != nil {
+				panic(errors.Wrap(err, "marshal arg %d error", i))
+			}
+
+			data = string(buff)
 		}
 
-		message = strings.Replace(message, placeholder, string(data), -1)
+		message = strings.Replace(message, placeholder, data, -1)
 
 		placeholder = strings.TrimSuffix(strings.TrimPrefix(placeholder, "{"), "}")
 
