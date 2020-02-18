@@ -10,6 +10,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+type hello struct {
+	A string `json:"a"`
+}
+
 func TestLog(t *testing.T) {
 	config := scf4go.New()
 
@@ -20,5 +24,5 @@ func TestLog(t *testing.T) {
 
 	require.NoError(t, err)
 
-	slf4go.Get("test").D("test a")
+	slf4go.Get("test").D("test a {@one}", &hello{A: "a"})
 }
